@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.ico" />
+
+  <script src="./src/assets/js/jquery.min.js"></script>
+  <!-- CSS -->
+  <link href="./src/assets/css/bootstrap.min.css?i=2.0.192" rel="stylesheet">
+  <link href="./src/assets/css/animate.min.css?i=2.0.192" rel="stylesheet">
+  <link href="./src/assets/css/toastr.min.css?i=2.0.192" rel="stylesheet">
+  <link href="./src/assets/css/blueimp-gallery.min.css?i=2.0.192" rel="stylesheet">
+  <link href="./src/assets/css/style.css?i=2.0.192" rel="stylesheet">
+  <link href="./src/assets/css/jquery.classycountdown.css?i=2.0.192" rel="stylesheet">
+  <link href="./src/assets/css/timeline.css?i=2.0.192" rel="stylesheet">
+  <link href="./src/assets/css/styles-addon.min.css?i=2.0.192" rel="stylesheet">
+  <link href="./src/assets/css/styles.min.css?i=2.0.192" rel="stylesheet">
+  <link href="./src/assets/css/styles-scheme-emerland.min.css?i=2.0.192" rel="stylesheet">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="msapplication-TileImage" content="/img/main-2/favicons/favicon-270.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Сайт-приглашение на свадьбу">
+
+  <meta property="og:title" content="Анна и Николай &mdash; наша свадьба">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="Дорогие друзья!
+  
+  Жить, любить, чувствовать. Однажды мы поняли, что нет ничего важнее этого. И что идти дальше мы хотим только вместе. А теперь мечтаем, чтобы день нашей свадьбы стал красивым и ярким событием на этом увлекательном пути. 
+  
+  Мы будем очень рады, если вы разделите этот счастливый день с нами. 
+  
+  Увидимся на нашей свадьбе!">
+
+  <title>Анастасия и Сергей &mdash; наша свадьба</title>
+
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <!-- JS -->
+  <script src="./src/assets/js/bootstrap.min.js?i=2.0.192"></script>
+  <script src="./src/assets/js/ie10-viewport-bug-workaround.min.js?i=2.0.192"></script>
+  <script src="./src/assets/js/modernizr.custom.js?i=2.0.192"></script>
+  <script src="./src/assets/js/toastr.min.js?i=2.0.192"></script>
+  <script src="./src/assets/js/wow.min.js?i=2.0.192"></script>
+  <script src="./src/assets/js/jQueryEmoji.min.js?i=2.0.192"></script>
+  <script src="./src/assets/js/jquery.knob.js?i=2.0.192"></script>
+  <script src="./src/assets/js/jquery.throttle.js?i=2.0.192"></script>
+  <script src="./src/assets/js/jquery.classycountdown.js?i=2.0.192"></script>
+  <script src="./src/assets/js/jquery.blueimp-gallery.min.js?i=2.0.192"></script>
+  <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&coordorder=longlat&apikey=75443b0c-6930-4b56-8982-cc085e138f61"></script>
+  <script src="./src/assets/js/scripts.min.js?i=2.0.192"></script>
+  <script src="./src/assets/js/scripts-program-yandex.min.js?i=2.0.192"></script>
+
+  <!-- Scripts -->
+  <script>
+    function initGallery(galleryId) {
+      document.getElementById(galleryId).onclick = function (event) {
+        event = event || window.event;
+        var target = event.target || event.srcElement,
+          link = target.src ? target.parentNode : target,
+          options = { startSlideshow: false, slideshowInterval: 2000, index: link, event: event },
+          links = this.getElementsByTagName('a');
+        blueimp.Gallery(links, options);
+      };
+    }
+    $(document).ready(function () {
+      if ($('#gallery-story').length)
+        initGallery('gallery-story');
+      if ($('#gallery-photos').length)
+        initGallery('gallery-photos');
+      if ($('#gallery-instagram').length)
+        initGallery('gallery-instagram');
+    });
+  </script>
+  <script>
+    var weddingDate = '2024-06-01'
+    $(document).ready(function () {
+      var date_when = weddingDate;
+      var theme = 'time_to_travel_002';
+      var date_when_a = date_when.split('-');
+      var d = new Date(date_when_a[0], date_when_a[1] - 1, date_when_a[2]);
+
+      $('#countdown').ClassyCountdown({
+        theme: theme,
+        end: $.now() + Math.floor((d.getTime() - Date.now()) / 1000), // end time
+        now: $.now(),
+        labelsOptions: {
+          lang: {
+            days: 'Дней',
+            hours: 'Часов',
+            minutes: 'Минут',
+            seconds: 'Секунд',
+          }
+        },
+      });
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      const $simpleCountdown = $('#simple-countdown');
+      let countDownTargetDate = new Date(weddingDate);
+      let countDownInterval = null;
+
+      printTime();
+      runInterval();
+      showTimer();
+
+      function runInterval() {
+        countDownInterval = setInterval(printTime, 1000);
+      }
+
+      function printTime() {
+        const now = new Date().getTime();
+        const distance = countDownTargetDate.getTime() - now;
+        const inMilliseconds = {
+          day: 1000 * 60 * 60 * 24,
+          hour: 1000 * 60 * 60,
+          minute: 1000 * 60,
+          second: 1000,
+        }
+
+        const days = addLeadingZero(Math.floor(distance / inMilliseconds.day));
+        const hours = addLeadingZero(Math.floor((distance % inMilliseconds.day) / inMilliseconds.hour));
+        const minutes = addLeadingZero(Math.floor((distance % inMilliseconds.hour) / inMilliseconds.minute));
+        const seconds = addLeadingZero(Math.floor((distance % inMilliseconds.minute) / inMilliseconds.second));
+
+        const result = `${days} : ${hours} : ${minutes} : ${seconds}`;
+
+        if (distance < 0) {
+          clearInterval(countDownInterval);
+
+          $simpleCountdown.hide();
+        } else {
+          $simpleCountdown.find('.simple-countdown-days').text(days);
+          $simpleCountdown.find('.simple-countdown-hours').text(hours);
+          $simpleCountdown.find('.simple-countdown-minutes').text(minutes);
+          $simpleCountdown.find('.simple-countdown-seconds').text(seconds);
+        }
+      }
+
+      function showTimer() {
+        setTimeout(() => {
+          $simpleCountdown.find('.simple-countdown-value').removeClass('opacity-0');
+        }, 400);
+      }
+
+      function addLeadingZero(value) {
+        if (value < 10) {
+          return `0${value}`;
+        }
+
+        return String(value);
+      }
+    });
+  </script>
+  <script>
+    ymaps.ready(initRegister);
+    ymaps.ready(initRest);
+
+    function initRegister() {
+      if (document.getElementById('map-register')) {
+        // Центр карты
+        var center = [];
+        var map_register_coords = '83.764585, 53.283586';
+        var map_register_addr = 'Россия, Барнаул, ул. Абаканская 3г к2';
+
+        if (map_register_coords.length) {
+          var coords = map_register_coords.split(',');
+
+          center.push(coords[0]);
+          center.push(coords[1]);
+        } else {
+          center = [37.62209300, 55.75399400];
+        }
+
+        // Создаем карту
+        mapRegister = new ymaps.Map('map-register', {
+          center: center,
+          zoom: 16,
+          controls: ['smallMapDefaultSet']
+        });
+
+        // Создаем метку
+        placemarkRegister = new ymaps.Placemark(center, {
+          balloonContentBody: map_register_addr,
+        }, {
+          preset: 'twirl#redStretchyIcon',
+        });
+
+        // Добавление метки на карту
+        mapRegister.geoObjects.add(placemarkRegister);
+
+        // Поведение карты
+        mapRegister.behaviors.disable('scrollZoom');
+      }
+    }
+
+    function initRest() {
+      if (document.getElementById('map-rest')) {
+        // Центр карты
+        var center = [];
+        var map_rest_coords = '37.66523751855389,55.74013510414024';
+        var map_rest_addr = 'Россия, Москва, Таганская улица, 25';
+
+        if (map_rest_coords.length) {
+          var coords = map_rest_coords.split(',');
+
+          center.push(coords[0]);
+          center.push(coords[1]);
+        } else {
+          center = [37.62209300, 55.75399400];
+        }
+
+        // Создаем карту
+        mapRest = new ymaps.Map('map-rest', {
+          center: center,
+          zoom: 16,
+          controls: ['smallMapDefaultSet']
+        });
+
+        // Создаем метку
+        placemarkRest = new ymaps.Placemark(center, {
+          balloonContentBody: map_rest_addr,
+        }, {
+          preset: 'twirl#redStretchyIcon',
+        });
+
+        // Добавление метки на карту
+        mapRest.geoObjects.add(placemarkRest);
+
+        // Поведение карты
+        mapRest.behaviors.disable('scrollZoom');
+      }
+    }
+  </script>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>

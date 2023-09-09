@@ -1,0 +1,15 @@
+app:
+  name: "Wedding invite"
+  port: 3999
+db:
+  postgres:
+    host: "localhost"
+    port: 5432
+    user: "postgres"
+    password: "postgres"
+    database: "invite"
+logger:
+  level: 0
+  trace: false
+metrics:
+  collect: false
