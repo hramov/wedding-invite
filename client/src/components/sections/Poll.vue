@@ -5,7 +5,7 @@ import PollForm from "../forms/PollForm.vue";
 <template>
 	<div class="section section_padding section_center" id="section-poll">
 		<div class="section-body">
-			<h2><span>А теперь вы ответьте на наши </span></h2>
+			<h2>А теперь вы ответьте на наши</h2>
       <PollForm />
 		</div>
 	</div>

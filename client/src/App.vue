@@ -7,6 +7,12 @@ import Map from './components/sections/Map.vue';
 import Questions from './components/sections/Questions.vue';
 import Schedule from './components/sections/Schedule.vue';
 import Poll from './components/sections/Poll.vue';
+import {onMounted} from "vue";
+import axios from "axios";
+
+onMounted(async () => {
+  await axios.get(import.meta.env.VITE_API_URL + '/check')
+})
 
 </script>
 

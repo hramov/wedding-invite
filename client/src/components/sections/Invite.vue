@@ -32,13 +32,11 @@
 				<!-- Жених и невеста -->
 				<div class="section__invite-newlyweds">
 					<div class="item">
-						<img
-							src="https://wedinvent.ru/addon/mywed/3/photo_bride/thumbnail/8db3f99439b7c5a09227087e3c775efc.jpg?i=1693120386" />
+            <img src="../../assets/img/nastya.jpg" alt="Анастасия"/>
 					</div>
 
 					<div class="item">
-						<img
-							src="https://wedinvent.ru/addon/mywed/3/photo_bridegroom/thumbnail/f0c1390c6a4bb107baec9bdade0a9c28.jpg?i=1693120386" />
+						<img src="../../assets/img/sergey.jpg" alt="Сергей"/>
 					</div>
 				</div>
 

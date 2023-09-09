@@ -4,10 +4,12 @@ create table if not exists guest (
      id serial unique,
      name varchar,
      email varchar,
-     presence bool,
+     presence varchar,
      drink jsonb,
      food jsonb,
      music text,
-     transfer bool,
-     accommodation bool
+     transfer varchar,
+     accommodation varchar,
+     companion integer references guest(id),
+     date_created timestamp default now()
 );

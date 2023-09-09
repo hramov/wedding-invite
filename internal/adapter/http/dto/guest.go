@@ -12,5 +12,6 @@ type GuestDto struct {
 	Music         string    `json:"music,omitempty"`
 	Transfer      string    `json:"transfer,omitempty"`
 	Accommodation string    `json:"accommodation,omitempty"`
+	Companion     int       `json:"companion,omitempty"`
 	DateCreated   time.Time `json:"date_created"`
 }

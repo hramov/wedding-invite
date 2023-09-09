@@ -15,6 +15,7 @@ type Guest struct {
 	Music         string
 	Transfer      string
 	Accommodation string
+	Companion     int
 	DateCreated   time.Time
 }
 
@@ -29,6 +30,7 @@ func (u *Guest) Map() dto.GuestDto {
 		Music:         u.Music,
 		Transfer:      u.Transfer,
 		Accommodation: u.Accommodation,
+		Companion:     u.Companion,
 		DateCreated:   u.DateCreated,
 	}
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import axios from 'axios';
 
 const scrollToFormStart = () =>  {
@@ -10,19 +10,54 @@ const scrollToFormStart = () =>  {
   }
 }
 
+const companions = ref([]);
+
+const getCompanions = async () => {
+  try {
+    const resp = await axios.get(import.meta.env.VITE_API_URL + '/companions');
+    if (resp.status < 400) {
+      companions.value = resp.data;
+    }
+  } catch (_err: unknown) {
+    const err = _err as Error
+    console.log(err.message)
+  }
+}
+
+onMounted(async () => {
+  await getCompanions();
+});
+
 const poll = ref({
   name: '',
   email: '',
   presence: '',
-  drink: [],
-  food: [],
+  drink: [] as string[],
+  food: [] as string[],
   music: '',
   transfer: '',
   accommodation: '',
+  companion: null,
 });
 
+const clear = () => {
+  poll.value = {
+    name: '',
+    email: '',
+    presence: '',
+    drink: [],
+    food: [],
+    music: '',
+    transfer: '',
+    accommodation: '',
+    companion: null,
+  };
+}
+
 const errors = ref<{ field: string, message: string}[]>([]);
+
 const successMessage = ref('');
+
 const errorMessage = ref('');
 
 const validate = (): any[] => {
@@ -49,39 +84,41 @@ const validate = (): any[] => {
     });
   }
 
-  if (!poll.value.drink.length) {
-    errors.push({
-      field: 'alcohol',
-      message: 'Пожалуйста, дайте нам знать, что вы предпочитаете пить'
-    });
-  }
+  if (poll.value.presence === 'yes') {
+    if (!poll.value.drink.length) {
+      errors.push({
+        field: 'alcohol',
+        message: 'Пожалуйста, дайте нам знать, что вы предпочитаете пить'
+      });
+    }
 
-  if (!poll.value.food.length) {
-    errors.push({
-      field: 'food',
-      message: 'Пожалуйста, дайте нам знать, что вы предпочитаете из еды'
-    });
-  }
+    if (!poll.value.food.length) {
+      errors.push({
+        field: 'food',
+        message: 'Пожалуйста, дайте нам знать, что вы предпочитаете из еды'
+      });
+    }
 
-  if (!poll.value.music) {
-    errors.push({
-      field: 'music',
-      message: 'Ну хоть одну песенку :-)'
-    });
-  }
+    if (!poll.value.music) {
+      errors.push({
+        field: 'music',
+        message: 'Ну хоть одну песенку :-)'
+      });
+    }
 
-  if (!poll.value.transfer) {
-    errors.push({
-      field: 'transfer',
-      message: 'Пожалуйста, дайте нам знать, сможете ли вы добраться сами или понадобится помощь'
-    });
-  }
+    if (!poll.value.transfer) {
+      errors.push({
+        field: 'transfer',
+        message: 'Пожалуйста, дайте нам знать, сможете ли вы добраться сами или понадобится помощь'
+      });
+    }
 
-  if (!poll.value.accommodation) {
-    errors.push({
-      field: 'accommodation',
-      message: 'Пожалуйста, дайте нам знать, сможете ли вы разместиться сами или понадобится помощь'
-    });
+    if (!poll.value.accommodation) {
+      errors.push({
+        field: 'accommodation',
+        message: 'Пожалуйста, дайте нам знать, сможете ли вы разместиться сами или понадобится помощь'
+      });
+    }
   }
 
   if (errors.length > 0) {
@@ -92,8 +129,14 @@ const validate = (): any[] => {
 }
 
 const submit = async () => {
+  if (poll.value.drink.includes('Другое')) {
+    poll.value.drink = poll.value.drink.filter((item: string) => item !== 'Другое');
+    poll.value.drink.push(otherDrink.value)
+  }
+
   errors.value = validate();
 
+  console.log(errors.value);
   if (errors.value.length) {
     return;
   }
@@ -114,28 +157,15 @@ const submit = async () => {
 
 const sendToServer = async () => {
   try {
-    const resp = await axios.post(import.meta.env.VITE_API_URL + '/api/invite/add-guest', poll.value);
-    if (resp.status > 400) {
-      return resp.data;
-    }
+    await axios.post(import.meta.env.VITE_API_URL + '/add-guest', poll.value);
+    await getCompanions();
     return null
   } catch (err) {
     return err;
   }
 }
 
-const clear = () => poll.value = {
-  name: '',
-  email: '',
-  presence: '',
-  drink: [],
-  food: [],
-  music: '',
-  transfer: '',
-  accommodation: '',
-};
-
-const alcohol = [
+const alcohol: Array<{title: string, value: string}> = [
   {
     title: 'Вино белое',
     value: 'Вино белое'
@@ -168,9 +198,11 @@ const alcohol = [
     title: 'Другое',
     value: 'Другое'
   },
-]
+];
 
-const food = [
+const otherDrink = ref<string>('');
+
+const food: Array<{title: string, value: string}> = [
   {
     title: 'Рыба',
     value: 'Рыба'
@@ -191,7 +223,6 @@ const food = [
 </script>
 
 <template>
-
   <h3 style="color: #11845f">{{ successMessage }}</h3>
   <h3 style="color: darkred">{{ errorMessage }}</h3>
 
@@ -225,70 +256,89 @@ const food = [
       </v-radio>
     </v-radio-group>
 
-    <div>
-      <p>Что предпочитаете из напитков?</p>
-      <p style="color: darkred" v-if="errors.filter((item: any) => item.field === 'drink').length">{{ errors.find((item: any) => item.field === 'drink')?.message }}</p>
-      <v-checkbox
-          style="margin: 0; padding: 0; height: 50px"
-          v-for="item in alcohol" :key="item.title"
-          v-model="poll.drink"
-          :label="item.title"
-          :value="item.value"
-      ></v-checkbox>
-    </div>
+    <div v-if="poll.presence === 'yes'">
+      <div>
+        <p>Что предпочитаете из напитков?</p>
+        <p style="color: darkred" v-if="errors.filter((item: any) => item.field === 'drink').length">{{ errors.find((item: any) => item.field === 'drink')?.message }}</p>
+        <v-checkbox
+            style="margin: 0; padding: 0; height: 50px"
+            v-for="item in alcohol" :key="item.title"
+            v-model="poll.drink"
+            :label="item.title"
+            :value="item.value"
+        ></v-checkbox>
+        <v-text-field
+            v-if="poll.drink.includes('Другое' as never)"
+            v-model="otherDrink"
+            label="Ваш вариант"
+        ></v-text-field>
+      </div>
 
-    <div>
-      <p>Ваши предпочтения в еде?</p>
-      <p style="color: darkred" v-if="errors.filter((item: any) => item.field === 'food').length">{{ errors.find((item: any) => item.field === 'food')?.message }}</p>
-      <v-checkbox
-          style="margin: 0; padding: 0; height: 50px"
-          v-for="item in food" :key="item.title"
-          v-model="poll.food"
-          :label="item.title"
-          :value="item.value"
-      ></v-checkbox>
-    </div>
-    <br />
-    <div>
-      <p>Напишите несколько музыкальных композиций, которые Вы бы хотели услышать</p>
-      <p style="color: darkred" v-if="errors.filter((item: any) => item.field === 'music').length">{{ errors.find((item: any) => item.field === 'music')?.message }}</p>
-      <v-textarea v-model="poll.music" placeholder="1. Виски, кола, королева танцпола"></v-textarea>
-    </div>
+      <div>
+        <p>Ваши предпочтения в еде?</p>
+        <p style="color: darkred" v-if="errors.filter((item: any) => item.field === 'food').length">{{ errors.find((item: any) => item.field === 'food')?.message }}</p>
+        <v-checkbox
+            style="margin: 0; padding: 0; height: 50px"
+            v-for="item in food" :key="item.title"
+            v-model="poll.food"
+            :label="item.title"
+            :value="item.value"
+        ></v-checkbox>
+      </div>
+      <br />
+      <div>
+        <p>Напишите несколько музыкальных композиций, которые Вы бы хотели услышать</p>
+        <p style="color: darkred" v-if="errors.filter((item: any) => item.field === 'music').length">{{ errors.find((item: any) => item.field === 'music')?.message }}</p>
+        <v-textarea v-model="poll.music" placeholder="1. Виски, кола, королева танцпола"></v-textarea>
+      </div>
 
-    <v-radio-group v-model="poll.transfer">
-      <p>Нужен ли вам трансфер?</p>
-      <p style="color: darkred" v-if="errors.filter((item: any) => item.field === 'transfer').length">{{ errors.find((item: any) => item.field === 'transfer')?.message }}</p>
-      <v-radio value="Да, до места торжества и обратно">
-        <template v-slot:label>
-          <div>Да, до места торжества и обратно</div>
-        </template>
-      </v-radio>
-      <v-radio value="Да, только до места торжества">
-        <template v-slot:label>
-          <div>Да, только до места торжества</div>
-        </template>
-      </v-radio>
-      <v-radio value="Нет">
-        <template v-slot:label>
-          <div>Нет, доберусь сам(а)</div>
-        </template>
-      </v-radio>
-    </v-radio-group>
+      <v-radio-group v-model="poll.transfer">
+        <p>Нужен ли вам трансфер?</p>
+        <p style="color: darkred" v-if="errors.filter((item: any) => item.field === 'transfer').length">{{ errors.find((item: any) => item.field === 'transfer')?.message }}</p>
+        <v-radio value="Да, до места торжества и обратно">
+          <template v-slot:label>
+            <div>Да, до места торжества и обратно</div>
+          </template>
+        </v-radio>
+        <v-radio value="Да, только до места торжества">
+          <template v-slot:label>
+            <div>Да, только до места торжества</div>
+          </template>
+        </v-radio>
+        <v-radio value="Нет">
+          <template v-slot:label>
+            <div>Нет, доберусь сам(а)</div>
+          </template>
+        </v-radio>
+      </v-radio-group>
 
-    <v-radio-group v-model="poll.accommodation">
-      <p>Требуется ли вам помощь с размещением?</p>
-      <p style="color: darkred" v-if="errors.filter((item: any) => item.field === 'accommodation').length">{{ errors.find((item: any) => item.field === 'accommodation')!.message }}</p>
-      <v-radio value="Да">
-        <template v-slot:label>
-          <div>Да, мне нужен номер</div>
-        </template>
-      </v-radio>
-      <v-radio value="Нет">
-        <template v-slot:label>
-          <div>Нет, я справлюсь сам(а)</div>
-        </template>
-      </v-radio>
-    </v-radio-group>
+      <v-radio-group v-model="poll.accommodation">
+        <p>Требуется ли вам помощь с размещением?</p>
+        <p style="color: darkred" v-if="errors.filter((item: any) => item.field === 'accommodation').length">{{ errors.find((item: any) => item.field === 'accommodation')!.message }}</p>
+        <v-radio value="Да">
+          <template v-slot:label>
+            <div>Да, мне нужен номер</div>
+          </template>
+        </v-radio>
+        <v-radio value="Нет">
+          <template v-slot:label>
+            <div>Нет, я справлюсь сам(а)</div>
+          </template>
+        </v-radio>
+      </v-radio-group>
+
+      <div>
+        <p>Если вы будете не один, выберите своего спутника ниже</p>
+        <small>(он должен уже заполнить эту форму)</small>
+        <v-select
+            v-model="poll.companion"
+            label="Выберите спутника"
+            :items="companions"
+            item-title="name"
+            item-value="id"
+        ></v-select>
+      </div>
+    </div>
 
     <v-btn
         class="me-4"

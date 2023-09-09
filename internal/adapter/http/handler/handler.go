@@ -27,6 +27,7 @@ func New(cfg *config.Config, db *pgxpool.Pool, log logger.Logger) *Handler {
 
 func (h *Handler) Register(r chi.Router) {
 	r.Post("/add-guest", h.addGuest)
+	r.Get("/companions", h.companions)
 	r.Get("/check", h.check)
 }
 
@@ -51,4 +52,17 @@ func (h *Handler) addGuest(w http.ResponseWriter, r *http.Request) {
 	}
 
 	utils.SendResponse(http.StatusCreated, guestId, w)
+}
+
+func (h *Handler) companions(w http.ResponseWriter, r *http.Request) {
+	ctx, cancel := context.WithTimeout(r.Context(), 15*time.Second)
+	defer cancel()
+
+	companions, err := h.repository.GetCompanions(ctx)
+	if err != nil {
+		utils.SendError(http.StatusInternalServerError, fmt.Errorf("cannot fetch companions: %v", err).Error(), w)
+		return
+	}
+
+	utils.SendResponse(http.StatusOK, companions, w)
 }
