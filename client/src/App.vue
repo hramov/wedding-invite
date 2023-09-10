@@ -9,6 +9,7 @@ import Schedule from './components/sections/Schedule.vue';
 import Poll from './components/sections/Poll.vue';
 import {onMounted} from "vue";
 import axios from "axios";
+// import HeaderNew from "./components/sections/HeaderNew.vue";
 
 onMounted(async () => {
   await axios.get(import.meta.env.VITE_API_URL + '/check')
@@ -18,6 +19,7 @@ onMounted(async () => {
 
 <template>
 
+<!--  <HeaderNew />-->
 <!--	<Header />-->
 
 	<Invite />

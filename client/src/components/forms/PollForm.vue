@@ -251,7 +251,7 @@ const food: Array<{title: string, value: string}> = [
       </v-radio>
       <v-radio value="no">
         <template v-slot:label>
-          <div>К сожалению, не смогу присутствовать</div>
+          <div>Не смогу присутствовать</div>
         </template>
       </v-radio>
     </v-radio-group>
@@ -295,14 +295,14 @@ const food: Array<{title: string, value: string}> = [
       <v-radio-group v-model="poll.transfer">
         <p>Нужен ли вам трансфер?</p>
         <p style="color: darkred" v-if="errors.filter((item: any) => item.field === 'transfer').length">{{ errors.find((item: any) => item.field === 'transfer')?.message }}</p>
-        <v-radio value="Да, до места торжества и обратно">
+        <v-radio value="До места торжества и обратно">
           <template v-slot:label>
-            <div>Да, до места торжества и обратно</div>
+            <div>До места торжества и обратно</div>
           </template>
         </v-radio>
-        <v-radio value="Да, только до места торжества">
+        <v-radio value="Только до места торжества">
           <template v-slot:label>
-            <div>Да, только до места торжества</div>
+            <div>Только до места торжества</div>
           </template>
         </v-radio>
         <v-radio value="Нет">

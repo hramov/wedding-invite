@@ -3,7 +3,9 @@
 
 <template>
 	<div class="section section_center section_padding" id="section-invite">
+    <img alt="flowers" style="position:absolute; top: 0; right: 0; width: 50%" src="../../assets/img/header.png" />
 		<div class="section-body">
+
 			<div class="section__invite">
 				<!-- Имена -->
 				<h2>
@@ -14,6 +16,9 @@
 						Сергей </span>
 				</h2>
 
+<!--        <h3 style="font-family: 'Times New Roman',sans-serif">Приглашают на свою свадьбу</h3>-->
+        <h2 style="color: black">01.06.2024</h2>
+
 				<!-- Текст -->
 				<div class="section__invite-text js-emoji-included">
 					<p>Дорогие друзья и родные!<br />
@@ -21,9 +26,9 @@
             Приглашаем разделить с нами радость особенного для нас события и стать свидетелями начала нашей семейной жизни!
             <br />
 						<br />
-						Мы будем очень рады, если вы разделите этот счастливый день с нами. <br />
-						<br />
-						Увидимся на нашей свадьбе!
+<!--						Мы будем очень рады, если вы разделите этот счастливый день с нами. <br />-->
+<!--						<br />-->
+<!--						Увидимся на нашей свадьбе!-->
 					</p>
 				</div>
 
@@ -41,7 +46,7 @@
 				</div>
 
 				<!-- Жених и невеста -->
-				<div class="section__invite-logo"></div>
+<!--				<div class="section__invite-logo"></div>-->
 
         <div class="section__first-countdown" id="simple-countdown">
 
