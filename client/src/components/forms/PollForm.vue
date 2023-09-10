@@ -70,12 +70,12 @@ const validate = (): any[] => {
     });
   }
 
-  if (!poll.value.email) {
-    errors.push({
-      field: 'email',
-      message: 'Сюда будут приходить новости',
-    });
-  }
+  // if (!poll.value.email) {
+  //   errors.push({
+  //     field: 'email',
+  //     message: 'Сюда будут приходить новости',
+  //   });
+  // }
 
   if (!poll.value.presence) {
     errors.push({
