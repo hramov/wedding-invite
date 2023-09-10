@@ -11,15 +11,15 @@
 
 			<div class="gallery">
 				<ul id="gallery-story">
-					<li><img src="../../assets/img/lovestory/1.png" alt=""></li>
-          <li><img src="../../assets/img/lovestory/2.png" alt=""></li>
           <li><img src="../../assets/img/lovestory/3.png" alt=""></li>
-          <li><img src="../../assets/img/lovestory/4.png" alt=""></li>
-          <li><img src="../../assets/img/lovestory/5.png" alt=""></li>
           <li><img src="../../assets/img/lovestory/6.png" alt=""></li>
+					<li><img src="../../assets/img/lovestory/1.png" alt=""></li>
           <li><img src="../../assets/img/lovestory/7.png" alt=""></li>
-          <li><img src="../../assets/img/lovestory/8.png" alt=""></li>
+          <li><img src="../../assets/img/lovestory/4.png" alt=""></li>
           <li><img src="../../assets/img/lovestory/9.png" alt=""></li>
+          <li><img src="../../assets/img/lovestory/2.png" alt=""></li>
+          <li><img src="../../assets/img/lovestory/5.png" alt=""></li>
+          <li><img src="../../assets/img/lovestory/8.png" alt=""></li>
 				</ul>
 			</div>
 		</div>

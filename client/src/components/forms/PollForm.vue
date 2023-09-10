@@ -234,12 +234,12 @@ const food: Array<{title: string, value: string}> = [
         label="Фамилия и имя"
     ></v-text-field>
 
-    <p style="color: darkred" v-if="errors.filter((item: any) => item.field === 'email').length">{{ errors.find((item: any) => item.field === 'email')?.message }}</p>
-    <v-text-field
-        v-model="poll.email"
-        type="email"
-        label="E-mail"
-    ></v-text-field>
+<!--    <p style="color: darkred" v-if="errors.filter((item: any) => item.field === 'email').length">{{ errors.find((item: any) => item.field === 'email')?.message }}</p>-->
+<!--    <v-text-field-->
+<!--        v-model="poll.email"-->
+<!--        type="email"-->
+<!--        label="E-mail"-->
+<!--    ></v-text-field>-->
 
     <v-radio-group v-model="poll.presence">
       <p>Присутствие</p>

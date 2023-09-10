@@ -46,4 +46,16 @@ onMounted(async () => {
 	backdrop-filter:
 		grayscale(0%) saturate(100%) contrast(100%) brightness(100%);
 }
+
+* {
+  border: none !important;
+}
+
+*::before {
+  content: none !important;
+}
+
+*::after {
+  content: none !important;
+}
 </style>
