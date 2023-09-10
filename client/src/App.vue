@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Arrow from './components/sections/Arrow.vue';
-// import Header from './components/sections/Header.vue';
 import Invite from './components/sections/Invite.vue';
 import LoveStory from './components/sections/LoveStory.vue';
 import Map from './components/sections/Map.vue';
@@ -9,7 +8,6 @@ import Schedule from './components/sections/Schedule.vue';
 import Poll from './components/sections/Poll.vue';
 import {onMounted} from "vue";
 import axios from "axios";
-// import HeaderNew from "./components/sections/HeaderNew.vue";
 
 onMounted(async () => {
   await axios.get(import.meta.env.VITE_API_URL + '/check')
@@ -18,24 +16,13 @@ onMounted(async () => {
 </script>
 
 <template>
-
-<!--  <HeaderNew />-->
-<!--	<Header />-->
-
 	<Invite />
-
 	<Questions />
-
 	<Poll />
-
 	<LoveStory />
-
 	<Schedule />
-
 	<Map />
-
 	<Arrow />
-
 </template>
 
 <style scoped>
