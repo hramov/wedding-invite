@@ -2,51 +2,53 @@
 </script>
 
 <template>
-	<div class="section section_center section_padding" id="section-invite">
-    <img alt="flowers" style="position:absolute; top: 0; right: 0; width: 50%; max-width: 500px" src="../../assets/img/header.png" />
-		<div class="section-body">
+  <div class="section section_center section_padding" id="section-invite">
+    <img alt="flowers" style="position:absolute; top: 0; right: 0; width: 50%; max-width: 500px"
+      src="../../assets/img/header.png" />
+    <div class="section-body">
 
-			<div class="section__invite">
-				<!-- Имена -->
-				<h2>
-					<span>
-						Анастасия
-						<span>&amp;</span>
+      <div class="section__invite">
+        <!-- Имена -->
+        <h2>
+          <span>
+            Анастасия
+            <span>&amp;</span>
 
-						Сергей </span>
-				</h2>
+            Сергей </span>
+        </h2>
 
         <h3>Приглашают на свою свадьбу</h3>
-        <h2 style="color: black">01.06.2024</h2>
+        <h2 style="color: black">02.06.2024</h2>
 
-				<!-- Текст -->
-				<div class="section__invite-text js-emoji-included">
-					<p>Дорогие друзья и родные!<br />
-						<br />
-            Приглашаем разделить с нами радость особенного для нас события и стать свидетелями начала нашей семейной жизни!
+        <!-- Текст -->
+        <div class="section__invite-text js-emoji-included">
+          <p>Дорогие друзья и родные!<br />
             <br />
-						<br />
-<!--						Мы будем очень рады, если вы разделите этот счастливый день с нами. <br />-->
-<!--						<br />-->
-<!--						Увидимся на нашей свадьбе!-->
-					</p>
-				</div>
+            Приглашаем разделить с нами радость особенного для нас события и стать свидетелями начала нашей семейной
+            жизни!
+            <br />
+            <br />
+            <!--						Мы будем очень рады, если вы разделите этот счастливый день с нами. <br />-->
+            <!--						<br />-->
+            <!--						Увидимся на нашей свадьбе!-->
+          </p>
+        </div>
 
-				<!-- Видео-обращение -->
+        <!-- Видео-обращение -->
 
-				<!-- Жених и невеста -->
-				<div class="section__invite-newlyweds">
-					<div class="item">
-            <img src="../../assets/img/nastya.jpg" alt="Анастасия"/>
-					</div>
+        <!-- Жених и невеста -->
+        <div class="section__invite-newlyweds">
+          <div class="item">
+            <img src="../../assets/img/nastya3.jpg" alt="Анастасия" />
+          </div>
 
-					<div class="item">
-						<img src="../../assets/img/sergey.jpg" alt="Сергей"/>
-					</div>
-				</div>
+          <div class="item">
+            <img src="../../assets/img/sergey.jpg" alt="Сергей" />
+          </div>
+        </div>
 
-				<!-- Жених и невеста -->
-<!--				<div class="section__invite-logo"></div>-->
+        <!-- Жених и невеста -->
+        <!--				<div class="section__invite-logo"></div>-->
 
         <div class="section__first-countdown" id="simple-countdown">
 
@@ -69,15 +71,15 @@
             </div>
           </div>
         </div>
-			</div>
+      </div>
 
-		</div>
-	</div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
 .section__first-countdown .simple-countdown {
-   /** display: grid;
+  /** display: grid;
     grid-template-columns: repeat(4,1fr);
     grid-template-rows: 1fr;
     grid-column-gap: 24px;
@@ -98,7 +100,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: rgba(17,132,95,0.1);
+  background: rgba(17, 132, 95, 0.1);
   backdrop-filter: blur(4px);
   transition: opacity .15s ease-in-out;
   border-radius: 16px;
